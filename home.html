@@ -1,0 +1,206 @@
+<!--home.html-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cable Car Booking System</title>
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="home.html" class="logo">Cable Car Booking</a>
+           <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="#booking">Book Now</a></li>
+                <li><a href="#rates">Rates</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO / SLIDER -->
+    <section class="hero">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="1.jpg" alt="Manakamana Cable Car"></div>
+                <div class="swiper-slide"><img src="2.jpg" alt="Chandragiri Cable Car"></div>
+                <div class="swiper-slide"><img src="3.jpg" alt="Chandragiri Cable Car View"></div>
+                <div class="swiper-slide"><img src="4.jpg" alt="Manakamana Top View"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <!-- Navigation -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </section>
+
+    <!-- BOOKING FORM -->
+    <section class="booking" id ="booking">
+        <div class="container">
+            <h2>Book Your Cable Car Ticket</h2>
+            <form class="booking-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your Gmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone No</label>
+                    <input type="tel" id="phone" placeholder="Enter phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" required>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Foreign">Foreign</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tripType">Trip Type</label>
+                    <select id="tripType" required>
+                        <option value="One Way">One Way</option>
+                        <option value="Two Way">Two Way</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="BookDate">Booking Date</label>
+                    <input type="date" id="BookDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="numPeople">Number of Adults</label>
+                    <input type="number" id="numPeople" value="0" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="numChildren">Children (0-12 yrs)</label>
+                    <input type="number" id="numChildren" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="numStudents">Students</label>
+                    <input type="number" id="numStudents" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="numSeniors">Senior Citizens</label>
+                    <input type="number" id="numSeniors" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="numAbled">Differently Abled</label>
+                    <input type="number" id="numAbled" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="goodsWeight">Weight of Goods (kg)</label>
+                    <input type="number" id="goodsWeight" value="0" min="0">
+                </div>
+                <button type="button" class="btn" onclick="downloadPDF()">Submit & Download Ticket</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- RATES TABLE -->
+    <section class="rates" id ="rates">
+        <div class="container">
+            <h2>Rates</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>One Way</th>
+                        <th>Two Way</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Nepali Adult</td><td>Rs. 410</td><td>Rs. 700</td></tr>
+                    <tr><td>Nepali Child</td><td>Rs. 245</td><td>Rs. 420</td></tr>
+                    <tr><td>Nepali Student</td><td>Rs. 305</td><td>Rs. 525</td></tr>
+                    <tr><td>Nepali Senior Citizen</td><td>Rs. 285</td><td>Rs. 490</td></tr>
+                    <tr><td>Nepali Differently Abled</td><td>Rs. 205</td><td>Rs. 350</td></tr>
+                    <tr><td>Foreigner Adult</td><td>Rs. 600</td><td>Rs. 1000</td></tr>
+                    <tr><td>Foreigner Child</td><td>Rs. 400</td><td>Rs. 750</td></tr>
+                    <tr><td>Goods per kg</td><td>Rs. 17</td><td>Rs. 35</td></tr>
+                    <tr><td>Goat</td><td>Rs. 250</td><td>Rs. 450</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+    <!-- CONTACT US -->
+<section class="contact" id="contact">
+    <div class="container">
+        <h2>Contact Us</h2>
+
+        <div class="contact-box">
+
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><strong>Address:</strong> Pokhara, Nepal</p>
+                <p><strong>Email:</strong> cablecarbooking@gmail.com</p>
+                <p><strong>Phone:</strong> +977-9801234567</p>
+            </div>
+
+            <form class="contact-form">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Enter your name" required>
+                    <span class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Email</label>
+                    <input type="email" placeholder="Enter your email" required>
+                    <span class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea placeholder="Type your message..." rows="4" required></textarea>
+                    <span class="error"></span>
+                </div>
+
+                <button class="btn" type="submit">Send Message</button>
+                <p class="success-msg"></p>
+                <div id="toast"></div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+
+    
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content" id ="footer">
+            <h3>Cable Car Booking</h3>
+            <p>Book your cable car ticket online with ease. Enjoy the scenic ride safely.</p>
+            <ul class="socials">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy;  Cable Car Booking. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
