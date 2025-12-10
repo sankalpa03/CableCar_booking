@@ -501,7 +501,7 @@ footer .footer-bottom {
 
 @media (max-width: 480px) {
     .container { padding: 0 15px; }
-    .navbar .logo { font-size: 10px; color: rgb(228, 198, 153)}
+    .navbar .logo { font-size: 15px; color: rgb(228, 198, 153)}
     .navbar .nav-links a { font-size: 0.9em;}
     .hero .swiper-container { height: 250px; }
     .booking h2, .rates h2 { font-size: 1.5em; }
