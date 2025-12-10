@@ -58,6 +58,7 @@ body {
     color: var(--light-text-color);
     font-size: 28px;
     font-weight: 700;
+    color: rgb(228, 198, 153);
     text-decoration: none;
 }
 
@@ -468,7 +469,7 @@ footer .footer-bottom {
    ========================= */
 @media (max-width: 992px) {
     .navbar .logo { font-size: 24px; }
-    .navbar .nav-links { gap: 15px; }
+    .navbar .nav-links { gap: 15px; color: rgb(228, 198, 153)}
     .hero .swiper-container { height: 380px; }
     .booking h2, .rates h2 { font-size: 2em; margin-bottom: 30px; }
     .booking-form { padding: 30px; gap: 20px; }
@@ -476,8 +477,9 @@ footer .footer-bottom {
 }
 
 @media (max-width: 768px) {
-    .navbar .container { flex-direction: column; text-align: center; gap: 15px; }
-    .navbar .nav-links { flex-direction: column; gap: 10px; width: 100%; margin-top: 10px; }
+    .navbar .container { flex-direction: row; text-align:center ; gap: 15px; }
+    .navbar .logo {  font-size: 19px; color: rgb(228, 198, 153)};
+    .navbar .nav-links { flex-direction: row; text-align: end; gap: 10px; width: 100%; margin-top: 10px; }
     .hero .swiper-container { height: 300px; margin: 0 10px; }
     .swiper-button-next, .swiper-button-prev { width: 35px; height: 35px; transform: translateY(-50%) scale(0.8); }
     .swiper-button-prev { left: 5px; }
@@ -499,8 +501,8 @@ footer .footer-bottom {
 
 @media (max-width: 480px) {
     .container { padding: 0 15px; }
-    .navbar .logo { font-size: 22px; }
-    .navbar .nav-links a { font-size: 0.9em; }
+    .navbar .logo { font-size: 22px; color: rgb(228, 198, 153)}
+    .navbar .nav-links a { font-size: 0.9em;}
     .hero .swiper-container { height: 250px; }
     .booking h2, .rates h2 { font-size: 1.5em; }
     .booking-form { padding: 20px; }
