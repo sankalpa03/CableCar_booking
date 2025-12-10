@@ -1,5 +1,3 @@
-/*--script.js--*/
-
 // ================= SWIPER =================
 var swiper = new Swiper('.swiper-container', {
     loop: true,
@@ -30,8 +28,6 @@ numChildrenInput.addEventListener("input", function () {
     let numChildren = parseInt(this.value) || 0;
     if (numChildren > numAdults) {
         this.value = numAdults;
-        if (numChildren > 0)
-            
         alert("Children must be accompanied by at least one adult!");
     }
 });
@@ -70,6 +66,8 @@ function validateTotalSeats() {
         alert("Cannot book more than 20 seats at a time!");
         return false;
     }
+
+    return true;
 }
 
 // ================= EMAIL VALIDATION =================
@@ -117,55 +115,78 @@ function downloadPDF() {
     let total = 0;
     total += (rates[userType].Adult[tripType] || 0) * numAdults;
     total += (rates[userType].Child[tripType] || 0) * numChildren;
-    if (userType === "Nepali") {
-        total += (rates.Nepali.Student[tripType] || 0) * numStudents;
-        total += (rates.Nepali.Senior[tripType] || 0) * numSeniors;
-        total += (rates.Nepali.Abled[tripType] || 0) * numAbled;
-    }
-    total += (rates.GoodsPerKg[tripType] || 0) * goodsWeight;
 
-    const { jsPDF } = window.jspdf;
+    if (userType === "Nepali") {
+        total += rates.Nepali.Student[tripType] * numStudents;
+        total += rates.Nepali.Senior[tripType] * numSeniors;
+        total += rates.Nepali.Abled[tripType] * numAbled;
+    }
+
+    total += rates.GoodsPerKg[tripType] * goodsWeight;
+    
+    const jsPDF = window.jspdf.jsPDF;
+
     const doc = new jsPDF();
 
     // HEADER
-    doc.setFillColor(30, 61, 89); doc.rect(0, 0, 210, 25, "F");
-    doc.setTextColor(255, 255, 255); doc.setFontSize(18); doc.setFont("helvetica", "bold");
+    doc.setFillColor(30, 61, 89); 
+    doc.rect(0, 0, 210, 25, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
     doc.text("Cable Car Ticket", 105, 17, null, null, "center");
 
-    // CUSTOMER INFO
-    doc.setFillColor(245, 245, 245); doc.rect(10, 30, 190, 50, "F");
-    doc.setTextColor(30, 61, 89); doc.setFontSize(12); doc.setFont("helvetica", "normal");
-    doc.text(`Name: ${name}`, 15, 45);
-    doc.text(`Email: ${email}`, 15, 55);
-    doc.text(`Phone: ${phone}`, 15, 65);
-    doc.text(`Country: ${country}`, 110, 45);
-    doc.text(`Trip Type: ${tripType}`, 110, 55);
-    doc.text(`Booking Date: ${bookingDate}`, 110, 65);
+    // USER INFO
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(11);
+    doc.text(`Name: ${name}`, 15, 40);
+    doc.text(`Email: ${email}`, 15, 50);
+    doc.text(`Phone: ${phone}`, 15, 60);
+    doc.text(`Country: ${country}`, 120, 40);
+    doc.text(`Trip Type: ${tripType}`, 120, 50);
+    doc.text(`Booking Date: ${bookingDate}`, 120, 60);
 
-    // ITEMS TABLE
-    let startY = 90; doc.setFillColor(30, 61, 89); doc.setTextColor(255, 255, 255); doc.rect(10, startY, 190, 10, "F");
-    doc.text("Item", 15, startY + 7);
-    doc.text("Qty", 105, startY + 7);
-    doc.text("Price (Rs)", 150, startY + 7);
+    // TABLE HEADER
+    let y = 80;
+    doc.setFontSize(13);
+    doc.setFillColor(30, 61, 89);
+    doc.setTextColor(255, 255, 255);
+    doc.rect(10, y, 190, 10, "F");
+    doc.text("Item", 15, y + 7);
+    doc.text("Qty", 105, y + 7);
+    doc.text("Price", 150, y + 7);
 
-    doc.setTextColor(0, 0, 0); let line = startY + 15;
-    function addItem(name, qty, price) { if (qty > 0) { doc.text(name, 15, line); doc.text(qty.toString(), 105, line); doc.text(price.toString(), 150, line); line += 10; } }
-    addItem("Adult", numAdults, (rates[userType].Adult[tripType] || 0) * numAdults);
-    addItem("Child", numChildren, (rates[userType].Child[tripType] || 0) * numChildren);
-    if (userType === "Nepali") {
-        addItem("Student", numStudents, (rates.Nepali.Student[tripType] || 0) * numStudents);
-        addItem("Senior Citizen", numSeniors, (rates.Nepali.Senior[tripType] || 0) * numSeniors);
-        addItem("Differently Abled", numAbled, (rates.Nepali.Abled[tripType] || 0) * numAbled);
+    // TABLE ITEMS
+    y += 15;
+    doc.setTextColor(0, 0, 0);
+
+    function addItem(label, qty, price) {
+        if (qty > 0) {
+            doc.text(label, 15, y);
+            doc.text(String(qty), 105, y);
+            doc.text(String(price), 150, y);
+            y += 10;
+        }
     }
-    addItem("Goods (kg)", goodsWeight, (rates.GoodsPerKg[tripType] || 0) * goodsWeight);
 
-    // TOTAL & FOOTER
-    doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.setTextColor(243, 156, 18);
-    doc.text(`Total: Rs.${total}`, 105, line + 15, null, null, "center");
-    doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.setTextColor(100);
-    doc.text("Thank you for booking with Cable Car. Enjoy your ride safely!", 105, line + 25, null, null, "center");
+    addItem("Adult", numAdults, rates[userType].Adult[tripType] * numAdults);
+    addItem("Child", numChildren, rates[userType].Child[tripType] * numChildren);
 
+    if (userType === "Nepali") {
+        addItem("Student", numStudents, rates.Nepali.Student[tripType] * numStudents);
+        addItem("Senior Citizen", numSeniors, rates.Nepali.Senior[tripType] * numSeniors);
+        addItem("Differently Abled", numAbled, rates.Nepali.Abled[tripType] * numAbled);
+    }
+
+    addItem("Goods (kg)", goodsWeight, rates.GoodsPerKg[tripType] * goodsWeight);
+
+    // TOTAL
+    doc.setFontSize(14);
+    doc.setTextColor(243, 156, 18);
+    doc.text(`TOTAL: Rs. ${total}`, 105, y + 10, null, null, "center");
+
+    // SAVE
     doc.save("CableCarTicket.pdf");
+
     alert("Ticket generated successfully!");
 }
 
@@ -185,10 +206,21 @@ function initContactFormValidation() {
 
         contactForm.querySelectorAll(".error").forEach(el => el.textContent = "");
 
-        if (!nameInput.value.trim()) { contactForm.querySelector('input[type="text"] + .error').textContent = "Please enter your name"; valid = false; }
+        if (!nameInput.value.trim()) {
+            contactForm.querySelector('input[type="text"] + .error').textContent = "Please enter your name";
+            valid = false;
+        }
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) { contactForm.querySelector('input[type="email"] + .error').textContent = "Please enter a valid email"; valid = false; }
-        if (!messageInput.value.trim()) { contactForm.querySelector('textarea + .error').textContent = "Please type your message"; valid = false; }
+        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+            contactForm.querySelector('input[type="email"] + .error').textContent = "Please enter a valid email";
+            valid = false;
+        }
+
+        if (!messageInput.value.trim()) {
+            contactForm.querySelector('textarea + .error').textContent = "Please type your message";
+            valid = false;
+        }
 
         if (valid) {
             showToast(`Thank you, ${nameInput.value.trim()}! We will get back to you soon.`, "green");
@@ -227,11 +259,4 @@ function showToast(message, color = "#1e3d59") {
 window.addEventListener("DOMContentLoaded", () => {
     setBookingDateLimits();
     initContactFormValidation();
-
-    const bookingForm = document.getElementById("bookingForm");
-    if (bookingForm) {
-        bookingForm.addEventListener("submit", function (e) {
-            if (!validateTotalSeats()) e.preventDefault();
-        });
-    }
 });
